@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv, find_dotenv
 
-load_dotenv(find_dotenv())
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD")
@@ -13,4 +12,4 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 # TODO IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI ='postgresql://postgres:Postgresql1@localhost:5432/todovenu'
+SQLALCHEMY_DATABASE_URI ='postgresql://postgres:@localhost:5432/todovenu'

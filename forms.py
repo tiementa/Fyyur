@@ -1,4 +1,6 @@
 from datetime import datetime
+from winreg import REG_EXPAND_SZ
+from xml.dom import ValidationErr
 from flask_wtf import Form
 from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, BooleanField
 from wtforms.validators import DataRequired, AnyOf, URL
@@ -83,8 +85,21 @@ class VenueForm(Form):
         'address', validators=[DataRequired()]
     )
     phone = StringField(
-        'phone'
+        'phone', validators=[DataRequired()]
     )
+    def validate_phone(self, phone):
+        try:
+            input_number = pn.parse(phone.data)
+            if not (pn.is_valid_number(input_number)):
+                raise ValidationError('Invalid phone number.')
+        except:
+            input_number = pn.parse("+223"+phone.data)
+            if not (pn.is_valid_number(input_number)):
+                raise ValidationErr('Invalid phone number.')
+    
+                      
+    
+    
     image_link = StringField(
         'image_link'
     )
@@ -117,8 +132,8 @@ class VenueForm(Form):
         'facebook_link', validators=[URL()]
     )
     website_link = StringField(
-        'website_link'
-    )
+      'website_link', validators=[URL()]
+  )
 
     seeking_talent = BooleanField( 'seeking_talent' )
 
@@ -192,9 +207,18 @@ class ArtistForm(Form):
         ]
     )
     phone = StringField(
-        # TODO implement validation logic for state
-        'phone'
+        'phone', validators=[DataRequired()]
     )
+    def validate_phone(self, phone):
+        try:
+            input_number = pn.parse(phone.data)
+            if not (pn.is_valid_number(input_number)):
+                raise ValidationError('Invalid phone number.')
+        except:
+            input_number = pn.parse("+223"+phone.data)
+            if not (pn.is_valid_number(input_number)):
+                raise ValidationError('Invalid phone number.')
+    
     image_link = StringField(
         'image_link'
     )
@@ -227,9 +251,10 @@ class ArtistForm(Form):
         'facebook_link', validators=[URL()]
      )
 
+     
     website_link = StringField(
-        'website_link'
-     )
+      'website_link', validators=[URL()]
+  )
 
     seeking_venue = BooleanField( 'seeking_venue' )
 
